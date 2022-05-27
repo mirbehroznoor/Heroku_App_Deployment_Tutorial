@@ -8,32 +8,27 @@ cd ~/path/to/app
 ** Create files
 *** App.py
 #+begin_src python
-from dash import Dash, dcc, html, Input, Output
-import os
 app = Dash(__name__)
 
 server = app.server
 
 app.layout = html.Div([
-    html.H2('Hello World'),
-    dcc.Dropdown(['LA', 'NYC', 'MTL'],
-        'LA',
-        id='dropdown'
-    ),
-    html.Div(id='display-value')
+    ....
 ])
 
-@app.callback(Output('display-value', 'children'),
-                [Input('dropdown', 'value')])
-def display_value(value):
-    return f'You have selected {value}'
+@app.callback(
+    Output(),
+    [Input()]
+)
+def something(value):
+    return value
 
 if __name__ == '__main__':
     app.run_server(debug=True)
 #+end_src
 
 *** Procfile
-*(Note that app refers to the filename app.py. server refers to the variable server inside that file).*
+*Note:* app next to ~gunicorn~ refers to the filename app.py. server refers to the variable server inside app.py file.
 #+begin_src
 web: gunicorn app:server
 #+end_src
@@ -45,7 +40,7 @@ Either manually, write the dependencies in ~requirements.tx~ or through Command:
 #+end_src
 *Make sure the unrelated dependencies are not mentioned, thus export dependencies from app env, not global python env*
 
-*** Heroku and Git
+*** Heroku and Git terminal or Magit (Text User Interface)
 #+begin_src shell
 git init
 heroku create -a <app-name> --region eu
@@ -67,7 +62,7 @@ git commit -m "Initial App commit"
   heroku logs --tail
 #+end_src
 
-** Update or Changes in App in terminal or Magit
+** Update or Changes in App in terminal
 #+begin_src shell
 git status
 git add .
@@ -85,3 +80,9 @@ heroku git:remote -a <app-name> #set git remote for local repository
 git push heroku main
 #+end_src
 *And repeat the process
+
+
+Acknowledgments:
+
+[[https://dash.plotly.com/deployment][Plotly: Deploy Dash App on Heroku]]
+[[https://devcenter.heroku.com/articles/git][Heroku: Deploying with Git]]
