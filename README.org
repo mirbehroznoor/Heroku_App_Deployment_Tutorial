@@ -1,0 +1,87 @@
+* Heroku App Deployment
+
+** Setup
+#+begin_src shell
+cd ~/path/to/app
+#+end_src
+
+** Create files
+*** App.py
+#+begin_src python
+from dash import Dash, dcc, html, Input, Output
+import os
+app = Dash(__name__)
+
+server = app.server
+
+app.layout = html.Div([
+    html.H2('Hello World'),
+    dcc.Dropdown(['LA', 'NYC', 'MTL'],
+        'LA',
+        id='dropdown'
+    ),
+    html.Div(id='display-value')
+])
+
+@app.callback(Output('display-value', 'children'),
+                [Input('dropdown', 'value')])
+def display_value(value):
+    return f'You have selected {value}'
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+#+end_src
+
+*** Procfile
+*(Note that app refers to the filename app.py. server refers to the variable server inside that file).*
+#+begin_src
+web: gunicorn app:server
+#+end_src
+*** Requirements.txt
+Either manually, write the dependencies in ~requirements.tx~ or through Command:
+
+#+begin_src
+  pip freeze > requirements.txt
+#+end_src
+*Make sure the unrelated dependencies are not mentioned, thus export dependencies from app env, not global python env*
+
+*** Heroku and Git
+#+begin_src shell
+git init
+heroku create -a <app-name> --region eu
+git add .
+git commit -m "Initial App commit"
+#+end_src
+*** Name of Branch: Master or Main
+*Check for changes: ~git status~
+#+begin_src shell
+  git status
+  git branch # find the name of branch (master of main)
+  git push heroku <master or main branch> # deploy to heroku
+  heroku ps:scale web=1 # dyno scaling, in this case: free
+#+end_src
+
+*** Check if whether app is running or not
+*Missing Dependencies or something else*
+#+begin_src shell
+  heroku logs --tail
+#+end_src
+
+** Update or Changes in App in terminal or Magit
+#+begin_src shell
+git status
+git add .
+git commit -m "update my changes"
+#+end_src
+** Deploy App on Heroku
+#+begin_src shell
+git push heroku <master or main>
+#+end_src
+
+** Error: No response/Could not Read from Remote Repository
+#+begin_src shell
+heroku apps # user apps
+heroku git:remote -a <app-name> #set git remote for local repository
+git push heroku main
+#+end_src
+*And repeat the process
