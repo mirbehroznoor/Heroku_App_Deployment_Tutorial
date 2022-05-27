@@ -1,12 +1,12 @@
 * Heroku App Deployment
 
-** Setup
+*** Setup
 #+begin_src shell
 cd ~/path/to/app
 #+end_src
 
 ** Create files
-*** App.py
+** App.py
 #+begin_src python
 app = Dash(__name__)
 
@@ -27,27 +27,28 @@ if __name__ == '__main__':
     app.run_server(debug=True)
 #+end_src
 
-*** Procfile
+** Procfile
 *Note:* app next to ~gunicorn~ refers to the filename app.py. server refers to the variable server inside app.py file.
 #+begin_src
 web: gunicorn app:server
 #+end_src
-*** Requirements.txt
+** Requirements.txt
+*Make sure the unrelated dependencies are not mentioned, thus export dependencies from app env, not global python env*
 Either manually, write the dependencies in ~requirements.tx~ or through Command:
 
 #+begin_src
   pip freeze > requirements.txt
 #+end_src
-*Make sure the unrelated dependencies are not mentioned, thus export dependencies from app env, not global python env*
 
-*** Heroku and Git terminal or Magit (Text User Interface)
+
+** Heroku and Git terminal or Magit (Text User Interface)
 #+begin_src shell
 git init
 heroku create -a <app-name> --region eu
 git add .
 git commit -m "Initial App commit"
 #+end_src
-*** Name of Branch: Master or Main
+** Name of Branch: Master or Main
 *Check for changes: ~git status~
 #+begin_src shell
   git status
@@ -56,8 +57,8 @@ git commit -m "Initial App commit"
   heroku ps:scale web=1 # dyno scaling, in this case: free
 #+end_src
 
-*** Check if whether app is running or not
-*Missing Dependencies or something else*
+** Check if whether app is running or not
+*Missing Dependencies* or something else
 #+begin_src shell
   heroku logs --tail
 #+end_src
@@ -82,7 +83,7 @@ git push heroku main
 *And repeat the process
 
 
-Acknowledgments:
+** Acknowledgments:
 
-[[https://dash.plotly.com/deployment][Plotly: Deploy Dash App on Heroku]]
-[[https://devcenter.heroku.com/articles/git][Heroku: Deploying with Git]]
+- [[https://dash.plotly.com/deployment][Plotly: Deploy Dash App on Heroku]]
+- [[https://devcenter.heroku.com/articles/git][Heroku: Deploying with Git]]
