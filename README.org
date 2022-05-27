@@ -58,23 +58,24 @@ git commit -m "Initial App commit"
 #+end_src
 
 ** Check if whether app is running or not
+*** Check Logs
 *Missing Dependencies* or something else
 #+begin_src shell
   heroku logs --tail
 #+end_src
 
-** Update or Changes in App in terminal
+*** Update or Changes in App in terminal
 #+begin_src shell
 git status
 git add .
 git commit -m "update my changes"
 #+end_src
-** Deploy App on Heroku
+*** Deploy App on Heroku
 #+begin_src shell
 git push heroku <master or main>
 #+end_src
 
-** Error: No response/Could not Read from Remote Repository
+*** Error: No response/Could not Read from Remote Repository
 #+begin_src shell
 heroku apps # user apps
 heroku git:remote -a <app-name> #set git remote for local repository
@@ -83,7 +84,7 @@ git push heroku main
 *And repeat the process
 
 
-** Acknowledgments:
+*** Acknowledgments:
 
 - [[https://dash.plotly.com/deployment][Plotly: Deploy Dash App on Heroku]]
 - [[https://devcenter.heroku.com/articles/git][Heroku: Deploying with Git]]
