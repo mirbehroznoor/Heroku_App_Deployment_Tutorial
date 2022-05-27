@@ -81,7 +81,7 @@ heroku apps # user apps
 heroku git:remote -a <app-name> #set git remote for local repository
 git push heroku main
 #+end_src
-*And repeat the process
+*/And repeat the process/*
 
 
 *** Acknowledgments:
